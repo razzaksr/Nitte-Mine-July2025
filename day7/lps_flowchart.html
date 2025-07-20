@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPS Algorithm Analysis</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .section {
+            margin-bottom: 50px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        .section h2 {
+            color: #5a67d8;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        .flowchart {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+        }
+        .dp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            font-size: 14px;
+        }
+        .dp-table th, .dp-table td {
+            padding: 8px 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            min-width: 40px;
+        }
+        .dp-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+        .dp-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        .highlight {
+            background: #ffd700 !important;
+            font-weight: bold;
+            animation: pulse 0.5s ease-in-out;
+        }
+        .diagonal {
+            background: #c6f6d5 !important;
+            font-weight: bold;
+        }
+        .match {
+            background: #bee3f8 !important;
+            color: #2c5282;
+            font-weight: bold;
+        }
+        .nomatch {
+            background: #fed7d7 !important;
+            color: #c53030;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .input-data {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .string-visual {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .char-box {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            position: relative;
+        }
+        .char-index {
+            position: absolute;
+            top: -25px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .step-counter {
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        .calculation-box {
+            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
+            border: 2px solid #38b2ac;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: #2d3748;
+            color: #68d391;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .length-indicator {
+            background: #805ad5;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 Longest Palindromic Subsequence Analysis</h1>
+            <p>Dynamic Programming Solution Visualization</p>
+        </div>
+
+        <div class="section">
+            <h2>📊 Input Data</h2>
+            <div class="input-data">
+                <h3>String Analysis</h3>
+                <div class="string-visual">
+                    <div class="char-box"><div class="char-index">0</div>b</div>
+                    <div class="char-box"><div class="char-index">1</div>b</div>
+                    <div class="char-box"><div class="char-index">2</div>a</div>
+                    <div class="char-box"><div class="char-index">3</div>b</div>
+                    <div class="char-box"><div class="char-index">4</div>c</div>
+                    <div class="char-box"><div class="char-index">5</div>b</div>
+                    <div class="char-box"><div class="char-index">6</div>c</div>
+                    <div class="char-box"><div class="char-index">7</div>a</div>
+                    <div class="char-box"><div class="char-index">8</div>b</div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <strong>String:</strong> "bbabcbcab" &nbsp;&nbsp;&nbsp; <strong>Length:</strong> 9
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔄 Program Logic Flow</h2>
+            <div class="flowchart">
+                <div class="mermaid">
+                flowchart TD
+                    A[Start: Initialize string s = "bbabcbcab"] --> B[Create DP table: dp[n][n] filled with 0s]
+                    B --> C[Fill diagonal: dp[i][i] = 1<br/>All single characters are palindromes]
+                    C --> D[Start outer loop: l = 2 to n<br/>Process substrings by length]
+                    D --> E[Start inner loop: i = 0 to n-l<br/>Process all substrings of length l]
+                    E --> F[Calculate j = i + l - 1<br/>End index of substring]
+                    F --> G{Are s[i] and s[j] equal?}
+                    G -->|Yes| H{Is length l == 2?}
+                    G -->|No| I[dp[i][j] = max(dp[i+1][j], dp[i][j-1])<br/>Take best from excluding either end]
+                    H -->|Yes| J[dp[i][j] = 2<br/>Two matching characters]
+                    H -->|No| K[dp[i][j] = dp[i+1][j-1] + 2<br/>Add 2 to inner palindrome]
+                    J --> L[i++]
+                    K --> L
+                    I --> L
+                    L --> M{i <= n-l?}
+                    M -->|Yes| E
+                    M -->|No| N[l++]
+                    N --> O{l <= n?}
+                    O -->|Yes| D
+                    O -->|No| P[Return dp[0][n-1]]
+                    P --> Q[End: Longest Palindromic Subsequence Length]
+
+                    style A fill:#e1f5fe
+                    style C fill:#e8f5e8
+                    style G fill:#fff3e0
+                    style H fill:#f3e5f5
+                    style J fill:#c8e6c9
+                    style K fill:#c8e6c9
+                    style I fill:#ffcdd2
+                    style Q fill:#c8e6c9
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📈 Execution Path Visualization</h2>
+            
+            <div class="step-counter">Step 1: Initialize DP Table</div>
+            <p>Create a 9×9 table and fill diagonal with 1s (single characters are palindromes)</p>
+            <table class="dp-table">
+                <thead>
+                    <tr>
+                        <th>i\\j</th>
+                        <th>0(b)</th><th>1(b)</th><th>2(a)</th><th>3(b)</th><th>4(c)</th><th>5(b)</th><th>6(c)</th><th>7(a)</th><th>8(b)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><th>0(b)</th><td class="diagonal">1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>1(b)</th><td>0</td><td class="diagonal">1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>2(a)</th><td>0</td><td>0</td><td class="diagonal">1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>3(b)</th><td>0</td><td>0</td><td>0</td><td class="diagonal">1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>4(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td class="diagonal">1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>5(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="diagonal">1</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>6(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="diagonal">1</td><td>0</td><td>0</td></tr>
+                    <tr><th>7(a)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="diagonal">1</td><td>0</td></tr>
+                    <tr><th>8(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="diagonal">1</td></tr>
+                </tbody>
+            </table>
+
+            <div class="step-counter">Step 2: Process Length 2 Substrings</div>
+            <div class="length-indicator">Length = 2</div>
+            <table class="dp-table">
+                <thead>
+                    <tr>
+                        <th>i\\j</th>
+                        <th>0(b)</th><th>1(b)</th><th>2(a)</th><th>3(b)</th><th>4(c)</th><th>5(b)</th><th>6(c)</th><th>7(a)</th><th>8(b)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><th>0(b)</th><td>1</td><td class="match">2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>1(b)</th><td>0</td><td>1</td><td class="nomatch">1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>2(a)</th><td>0</td><td>0</td><td>1</td><td class="nomatch">1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>3(b)</th><td>0</td><td>0</td><td>0</td><td>1</td><td class="nomatch">1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>4(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td class="nomatch">1</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>5(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td class="nomatch">1</td><td>0</td><td>0</td></tr>
+                    <tr><th>6(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td class="nomatch">1</td><td>0</td></tr>
+                    <tr><th>7(a)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td class="nomatch">1</td></tr>
+                    <tr><th>8(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                </tbody>
+            </table>
+
+            <div class="step-counter">Step 3: Process Length 3 Substrings</div>
+            <div class="length-indicator">Length = 3</div>
+            <table class="dp-table">
+                <thead>
+                    <tr>
+                        <th>i\\j</th>
+                        <th>0(b)</th><th>1(b)</th><th>2(a)</th><th>3(b)</th><th>4(c)</th><th>5(b)</th><th>6(c)</th><th>7(a)</th><th>8(b)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><th>0(b)</th><td>1</td><td>2</td><td class="nomatch">2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>1(b)</th><td>0</td><td>1</td><td>1</td><td class="match">3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>2(a)</th><td>0</td><td>0</td><td>1</td><td>1</td><td class="nomatch">1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>3(b)</th><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td class="match">3</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><th>4(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td class="match">3</td><td>0</td><td>0</td></tr>
+                    <tr><th>5(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td class="nomatch">1</td><td>0</td></tr>
+                    <tr><th>6(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td class="nomatch">1</td></tr>
+                    <tr><th>7(a)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                    <tr><th>8(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                </tbody>
+            </table>
+
+            <div class="step-counter">Final Result: Complete DP Table</div>
+            <div class="length-indicator">All Lengths Processed</div>
+            <table class="dp-table">
+                <thead>
+                    <tr>
+                        <th>i\\j</th>
+                        <th>0(b)</th><th>1(b)</th><th>2(a)</th><th>3(b)</th><th>4(c)</th><th>5(b)</th><th>6(c)</th><th>7(a)</th><th>8(b)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><th>0(b)</th><td>1</td><td>2</td><td>2</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td class="highlight">5</td></tr>
+                    <tr><th>1(b)</th><td>0</td><td>1</td><td>1</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>4</td></tr>
+                    <tr><th>2(a)</th><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>3</td></tr>
+                    <tr><th>3(b)</th><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+                    <tr><th>4(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>3</td><td>3</td><td>3</td></tr>
+                    <tr><th>5(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>3</td></tr>
+                    <tr><th>6(c)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                    <tr><th>7(a)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                    <tr><th>8(b)</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Key Calculation Examples</h2>
+            
+            <div class="calculation-box">
+                <h4>Example 1: dp[0][8] - Full String Analysis</h4>
+                <p><strong>Substring:</strong> s[0...8] = "bbabcbcab"</p>
+                <p><strong>Characters:</strong> s[0]='b', s[8]='b' (Match!)</p>
+                <div class="formula">
+                    dp[0][8] = dp[1][7] + 2 = 3 + 2 = 5
+                </div>
+                <p>Since first and last characters match, we add 2 to the LPS of the inner substring s[1...7]</p>
+            </div>
+
+            <div class="calculation-box">
+                <h4>Example 2: dp[1][3] - "bab" Substring</h4>
+                <p><strong>Substring:</strong> s[1...3] = "bab"</p>
+                <p><strong>Characters:</strong> s[1]='b', s[3]='b' (Match!)</p>
+                <div class="formula">
+                    dp[1][3] = dp[2][2] + 2 = 1 + 2 = 3
+                </div>
+                <p>Perfect palindrome: both ends match, inner character forms LPS of length 1</p>
+            </div>
+
+            <div class="calculation-box">
+                <h4>Example 3: dp[2][4] - "abc" Substring</h4>
+                <p><strong>Substring:</strong> s[2...4] = "abc"</p>
+                <p><strong>Characters:</strong> s[2]='a', s[4]='c' (No Match)</p>
+                <div class="formula">
+                    dp[2][4] = max(dp[3][4], dp[2][3]) = max(1, 1) = 1
+                </div>
+                <p>No match, so take maximum of excluding either the first or last character</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🧩 Decision Flow for Complex Case</h2>
+            <div class="flowchart">
+                <div class="mermaid">
+                flowchart TD
+                    A[Processing dp[0][8]: "bbabcbcab"] --> B{s[0] == s[8]?<br/>'b' == 'b'?}
+                    B -->|Yes: Match| C{Length == 2?}
+                    C -->|No: Length = 9| D[dp[0][8] = dp[1][7] + 2]
+                    D --> E[Need to find dp[1][7]]
+                    E --> F[Process "babcbca"]
+                    F --> G{s[1] == s[7]?<br/>'b' == 'a'?}
+                    G -->|No: No Match| H[dp[1][7] = max(dp[2][7], dp[1][6])]
+                    H --> I[max(3, 3) = 3]
+                    I --> J[dp[0][8] = 3 + 2 = 5]
+                    
+                    style A fill:#e3f2fd
+                    style B fill:#fff8e1
+                    style D fill:#e8f5e8
+                    style G fill:#fff8e1
+                    style H fill:#ffebee
+                    style J fill:#c8e6c9
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Algorithm Analysis Summary</h2>
+            <div style="background: #f0f9ff; padding: 25px; border-radius: 15px; border-left: 5px solid #0ea5e9;">
+                <h3>🎯 Results:</h3>
+                <ul style="line-height: 2;">
+                    <li><strong>Longest Palindromic Subsequence Length:</strong> 5</li>
+                    <li><strong>Example LPS:</strong> "babab" or "bcbcb" (multiple valid solutions)</li>
+                    <li><strong>Time Complexity:</strong> O(n²) = O(81) operations</li>
+                    <li><strong>Space Complexity:</strong> O(n²) = O(81) table cells</li>
+                    <li><strong>Algorithm Type:</strong> Bottom-up Dynamic Programming</li>
+                </ul>
+                
+                <h3>🔄 Execution Pattern:</h3>
+                <ul style="line-height: 2;">
+                    <li><strong>Phase 1:</strong> Initialize diagonal (9 operations)</li>
+                    <li><strong>Phase 2:</strong> Process by increasing substring length (2 to 9)</li>
+                    <li><strong>Phase 3:</strong> Fill upper triangular matrix systematically</li>
+                    <li><strong>Decision Logic:</strong> Character match → extend inner LPS; No match → take maximum from neighbors</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                curve: 'basis',
+                padding: 20
+            }
+        });
+    </script>
+</body>
+</html>

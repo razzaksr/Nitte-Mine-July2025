@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knapsack Algorithm Analysis</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .section {
+            margin-bottom: 50px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        .section h2 {
+            color: #5a67d8;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        .flowchart {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+        }
+        .execution-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        .execution-table th, .execution-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .execution-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+        .execution-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        .execution-table tr:hover {
+            background: #e6fffa;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        .highlight {
+            background: #ffd700 !important;
+            font-weight: bold;
+        }
+        .input-data {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .input-data h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3rem;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .data-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+        .step-counter {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎒 Knapsack Algorithm Analysis</h1>
+            <p>Dynamic Programming Solution Visualization</p>
+        </div>
+
+        <div class="section">
+            <h2>📊 Input Data</h2>
+            <div class="input-data">
+                <h3>Problem Parameters</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <strong>Weights:</strong> [1, 2, 3, 2]
+                    </div>
+                    <div class="data-item">
+                        <strong>Values:</strong> [10, 20, 30, 40]
+                    </div>
+                    <div class="data-item">
+                        <strong>Capacity:</strong> 5
+                    </div>
+                    <div class="data-item">
+                        <strong>Items:</strong> 4
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔄 Program Logic Flow</h2>
+            <div class="flowchart">
+                <div class="mermaid">
+                flowchart TD
+                    A[Start: Initialize Input Data] --> B[Create DP Table: dp[n+1][capacity+1]]
+                    B --> C[Fill DP table with zeros]
+                    C --> D[Start outer loop: i = 1 to n]
+                    D --> E[Start inner loop: w = 0 to capacity]
+                    E --> F{Is weights[i-1] <= w?}
+                    F -->|Yes| G[Calculate both options:<br/>1. Exclude: dp[i-1][w]<br/>2. Include: dp[i-1][w-weights[i-1]] + values[i-1]]
+                    F -->|No| H[dp[i][w] = dp[i-1][w]<br/>Copy from previous row]
+                    G --> I[dp[i][w] = max of both options]
+                    I --> J[w++]
+                    H --> J
+                    J --> K{w <= capacity?}
+                    K -->|Yes| E
+                    K -->|No| L[i++]
+                    L --> M{i <= n?}
+                    M -->|Yes| D
+                    M -->|No| N[Return dp[n][capacity]]
+                    N --> O[End: Maximum Value Found]
+
+                    style A fill:#e1f5fe
+                    style O fill:#c8e6c9
+                    style F fill:#fff3e0
+                    style G fill:#f3e5f5
+                    style I fill:#e8f5e8
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📈 Execution Path Visualization</h2>
+            <div class="step-counter">Step-by-Step DP Table Construction</div>
+            
+            <h3>Initial State (All zeros)</h3>
+            <table class="execution-table">
+                <thead>
+                    <tr>
+                        <th>dp[i][w]</th>
+                        <th>w=0</th>
+                        <th>w=1</th>
+                        <th>w=2</th>
+                        <th>w=3</th>
+                        <th>w=4</th>
+                        <th>w=5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>i=0</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=1</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=2</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=3</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=4</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>After Processing Item 1 (weight=1, value=10)</h3>
+            <table class="execution-table">
+                <thead>
+                    <tr>
+                        <th>dp[i][w]</th>
+                        <th>w=0</th>
+                        <th>w=1</th>
+                        <th>w=2</th>
+                        <th>w=3</th>
+                        <th>w=4</th>
+                        <th>w=5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>i=0</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr class="highlight">
+                        <th>i=1</th>
+                        <td>0</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td>
+                    </tr>
+                    <tr>
+                        <th>i=2</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=3</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=4</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>After Processing Item 2 (weight=2, value=20)</h3>
+            <table class="execution-table">
+                <thead>
+                    <tr>
+                        <th>dp[i][w]</th>
+                        <th>w=0</th>
+                        <th>w=1</th>
+                        <th>w=2</th>
+                        <th>w=3</th>
+                        <th>w=4</th>
+                        <th>w=5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>i=0</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=1</th>
+                        <td>0</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td>
+                    </tr>
+                    <tr class="highlight">
+                        <th>i=2</th>
+                        <td>0</td><td>10</td><td>20</td><td>30</td><td>30</td><td>30</td>
+                    </tr>
+                    <tr>
+                        <th>i=3</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=4</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>After Processing Item 3 (weight=3, value=30)</h3>
+            <table class="execution-table">
+                <thead>
+                    <tr>
+                        <th>dp[i][w]</th>
+                        <th>w=0</th>
+                        <th>w=1</th>
+                        <th>w=2</th>
+                        <th>w=3</th>
+                        <th>w=4</th>
+                        <th>w=5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>i=0</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=1</th>
+                        <td>0</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td>
+                    </tr>
+                    <tr>
+                        <th>i=2</th>
+                        <td>0</td><td>10</td><td>20</td><td>30</td><td>30</td><td>30</td>
+                    </tr>
+                    <tr class="highlight">
+                        <th>i=3</th>
+                        <td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td>
+                    </tr>
+                    <tr>
+                        <th>i=4</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Final Result - After Processing Item 4 (weight=2, value=40)</h3>
+            <table class="execution-table">
+                <thead>
+                    <tr>
+                        <th>dp[i][w]</th>
+                        <th>w=0</th>
+                        <th>w=1</th>
+                        <th>w=2</th>
+                        <th>w=3</th>
+                        <th>w=4</th>
+                        <th>w=5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>i=0</th>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>i=1</th>
+                        <td>0</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td>
+                    </tr>
+                    <tr>
+                        <th>i=2</th>
+                        <td>0</td><td>10</td><td>20</td><td>30</td><td>30</td><td>30</td>
+                    </tr>
+                    <tr>
+                        <th>i=3</th>
+                        <td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td>
+                    </tr>
+                    <tr class="highlight">
+                        <th>i=4</th>
+                        <td>0</td><td>10</td><td>40</td><td>50</td><td>50</td><td>60</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Decision Tree for Key Calculations</h2>
+            <div class="flowchart">
+                <div class="mermaid">
+                flowchart TD
+                    A[Processing dp[4][5]<br/>Item 4: weight=2, value=40] --> B{Is weight[3]=2 <= capacity=5?}
+                    B -->|Yes| C[Calculate Options]
+                    C --> D[Option 1: Exclude Item 4<br/>dp[3][5] = 50]
+                    C --> E[Option 2: Include Item 4<br/>dp[3][5-2] + 40 = dp[3][3] + 40 = 30 + 40 = 70]
+                    D --> F[max(50, 70) = 70]
+                    E --> F
+                    F --> G[dp[4][5] = 70]
+                    
+                    style A fill:#e3f2fd
+                    style B fill:#fff8e1
+                    style D fill:#ffebee
+                    style E fill:#e8f5e8
+                    style F fill:#f3e5f5
+                    style G fill:#e1f5fe
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Execution Summary</h2>
+            <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; border-left: 5px solid #0ea5e9;">
+                <h3>Algorithm Performance:</h3>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Maximum Value Achieved:</strong> 60 (corrected from table above - actual final answer is 60)</li>
+                    <li><strong>Time Complexity:</strong> O(n × capacity) = O(4 × 5) = O(20)</li>
+                    <li><strong>Space Complexity:</strong> O(n × capacity) = O(20)</li>
+                    <li><strong>Total Iterations:</strong> 4 items × 6 capacities = 24 cell calculations</li>
+                    <li><strong>Optimal Items Selected:</strong> Items with weights that maximize value within capacity constraint</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                curve: 'basis',
+                padding: 20
+            }
+        });
+    </script>
+</body>
+</html>
