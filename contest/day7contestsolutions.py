@@ -27,51 +27,6 @@ def timeRequiredToBuy(tickets, k):
         if idx == k and t == 0:
             return time
 
-
-from collections import deque
-
-def can_assign(tasks, workers, pills, strength, mid):
-    task_deque = deque(tasks[:mid])
-    available_pills = pills
-    worker_idx = len(workers) - 1
-
-    for _ in range(mid):
-        if worker_idx < 0:
-            return False
-        if workers[worker_idx] >= task_deque[-1]:
-            task_deque.pop()
-            worker_idx -= 1
-        elif available_pills > 0:
-            left = 0
-            while left <= worker_idx and workers[left] + strength < task_deque[0]:
-                left += 1
-            if left > worker_idx:
-                return False
-            task_deque.popleft()
-            available_pills -= 1
-            worker_idx -= 1
-        else:
-            return False
-    return True
-
-def max_tasks_assignable(tasks, workers, pills, strength):
-    tasks.sort()
-    workers.sort()
-
-    low, high = 0, min(len(tasks), len(workers))
-    answer = 0
-
-    while low <= high:
-        mid = (low + high) // 2
-        if can_assign(tasks, workers, pills, strength, mid):
-            answer = mid
-            low = mid + 1
-        else:
-            high = mid - 1
-
-    return answer
-
-
 from collections import deque
 
 def can_assign(tasks, workers, pills, strength, mid):
@@ -118,11 +73,6 @@ def max_tasks_assignable(tasks, workers, pills, strength):
 print(max_tasks_assignable([3, 2, 1], [0, 3, 3], 1, 1))          # Output: 3
 print(max_tasks_assignable([5, 4], [0, 0, 0], 1, 5))             # Output: 1
 print(max_tasks_assignable([10, 15, 30], [0, 10, 10, 10, 10], 3, 10))  # Output: 2
-
-
-# print(max_tasks_assignable([3, 2, 1], [0, 3, 3], 1, 1))          # Output: 3
-# print(max_tasks_assignable([5, 4], [0, 0, 0], 1, 5))             # Output: 1
-# print(max_tasks_assignable([10, 15, 30], [0, 10, 10, 10, 10], 3, 10))  # Output: 2
 
 
 # print(timeRequiredToBuy([2, 3, 2], 2))  # Output: 6

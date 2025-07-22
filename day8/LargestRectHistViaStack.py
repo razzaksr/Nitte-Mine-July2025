@@ -10,7 +10,7 @@ def largestRectangleArea(heights):
             width = i if not stack else i - stack[-1] - 1  # Width of the rectangle
             max_area = max(max_area, height * width)
         stack.append(i)
-
+        print(stack)
     return max_area
 print(largestRectangleArea([2,1,5,6,2,3]))  # Output: 10
 print(largestRectangleArea([2,4]))         # Output: 4
