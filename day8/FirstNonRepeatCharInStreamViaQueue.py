@@ -1,12 +1,12 @@
-from collections import deque, Counter
+from collections import deque
 def firstNonRepeating(s):
-    freq = Counter()
+    table = dict()
     q = deque()
     result = []
     for ch in s:
-        freq[ch] += 1
+        table[ch]=table.get(ch,0)+1
         q.append(ch)
-        while q and freq[q[0]] > 1:
+        while q and table[q[0]] > 1:
             q.popleft()
         result.append(q[0] if q else '#')
     return ''.join(result)

@@ -1,29 +1,52 @@
+# def boxDelivering(boxes, portsCount, maxBoxes, maxWeight):
+#     n = len(boxes)
+#     dp = [0] + [float('inf')] * n
+#     j = 0
+#     weight = 0
+#     diff = 0
+#     for i in range(n):
+#         # print(j,j-1)
+#         while j < n and j - i < maxBoxes and weight + boxes[j][1] <= maxWeight:
+#             weight += boxes[j][1]
+#             if j == i or boxes[j][0] != boxes[j - 1][0]:
+#                 diff += 1
+#             j += 1
+#         dp[j] = min(dp[j], dp[i] + diff + 1)
+#         weight -= boxes[i][1]
+#         if i + 1 < n and boxes[i][0] != boxes[i + 1][0]:
+#             diff -= 1
+#     return dp[n]
+from collections import deque
 def boxDelivering(boxes, portsCount, maxBoxes, maxWeight):
-    n = len(boxes)
-    dp = [0] + [float('inf')] * n
-    j = 0
-    weight = 0
+    size = len(boxes)
+    grid = [0] + [float('inf')] * size
+    que = deque()
+    currentWeight = 0
     trips = 0
-    diff = 0
-
-    for i in range(n):
-        while j < n and j - i < maxBoxes and weight + boxes[j][1] <= maxWeight:
-            weight += boxes[j][1]
-            if j == i or boxes[j][0] != boxes[j - 1][0]:
-                diff += 1
-            j += 1
-        dp[j] = min(dp[j], dp[i] + diff + 1)
-        weight -= boxes[i][1]
-        if i + 1 < n and boxes[i][0] != boxes[i + 1][0]:
-            diff -= 1
-    return dp[n]
+    portChanges = deque()
+    j = 0
+    for i in range(size):
+        while j < size and len(que) < maxBoxes and currentWeight+boxes[j][1] <= maxWeight:
+            que.append(boxes[j])
+            currentWeight += boxes[j][1]
+            if not portChanges or portChanges[-1] != boxes[j][0]:
+                portChanges.append(boxes[j][0])
+                trips+=1
+            j+=1
+        grid[j] = min(grid[j],grid[i]+trips+1)
+        if que:
+            frontBox = que.popleft()
+            currentWeight -= frontBox[1]
+            if portChanges and portChanges[0]==frontBox[0]: 
+                portChanges.popleft()
+                if not portChanges or portChanges[0] != frontBox[0]:
+                    trips-=1
+    return grid[-1]
 
 test_cases = [
     ([[1,1],[2,1],[1,1]], 2, 3, 3),     # Expected: 4
     ([[1,2],[3,3],[3,1],[3,1],[2,4]], 3, 3, 6),  # Expected: 6
     ([[1,4],[1,2],[2,1],[2,1],[3,2],[3,4]], 3, 6, 7),  # Expected: 6
-    ([[1,3],[2,4],[3,2],[3,1]], 3, 3, 7),  # Expected: 7
-    ([[1,1],[2,2],[3,3]], 3, 3, 6),  # Expected: 5
 ]
 
 for idx, (boxes, ports, maxB, maxW) in enumerate(test_cases, 1):

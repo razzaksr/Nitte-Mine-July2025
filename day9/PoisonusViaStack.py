@@ -54,30 +54,22 @@ Plants = {(6,1), (5,2), (4,4)}
 
 Plants stop dying after the 2nd day.
 '''
-
+from collections import deque
 def poisonousPlants(p):
-    stack = []
+    que = deque()
     days = [0] * len(p)
     max_days = 0
-
     for i in range(len(p)):
-        max_day = 0
-
-        # While the stack is not empty and the current plant's pesticide is <= the previous plant
-        while stack and p[i] <= p[stack[-1]]:
-            stack.pop()
-
-        if stack:
-            days[i] = days[stack[-1]] + 1
-        else:
-            days[i] = 0
-
-        stack.append(i)
+        # While the que is not empty and the current plant's pesticide is <= the previous plant
+        while que and p[i] <= p[que[-1]]: que.pop()
+        if que: days[i] = days[que[-1]] + 1
+        else: days[i] = 0
+        que.append(i)
         max_days = max(max_days, days[i])
-
+    print(days)
     return max_days
 
-
+print(poisonousPlants([6, 5, 8, 4, 7, 10, 9]))  # Output: 2
 '''
 Here’s the **optimized Python solution** for the **"Poisonous Plants"** problem using a **monotonic stack-based approach** with **O(n)** time complexity.
 
