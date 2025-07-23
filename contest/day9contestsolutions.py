@@ -14,7 +14,6 @@ def length_of_longest_substring(s):
         max_len = max(max_len, right - left + 1)
 
     return max_len
-
 # Example usage
 # print(length_of_longest_substring("abcabcbb"))  # Output: 3
 # print(length_of_longest_substring("bbbbb"))     # Output: 1
