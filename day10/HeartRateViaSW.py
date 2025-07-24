@@ -5,16 +5,13 @@ def find_max(arr, window):
     dq = deque()
     for index in range(len(arr)):
         # Remove indices that are out of this window
-        if dq and dq[0] < index - window + 1:
-            dq.popleft()
+        if dq and dq[0] < index - window + 1: dq.popleft()
         # Remove smaller values at the end of deque
-        while dq and arr[dq[-1]] <= arr[index]:
-            dq.pop()
+        while dq and arr[dq[-1]] <= arr[index]: dq.pop()
         # Add current index
         dq.append(index)
         # Store maximum for current window
-        if index >= window - 1:
-            result[index - window + 1] = arr[dq[0]]
+        if index >= window - 1: result[index - window + 1] = arr[dq[0]]
     return result
 
 # Example usage
