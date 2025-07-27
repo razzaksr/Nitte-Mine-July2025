@@ -2,13 +2,11 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
-
-def reverseKGroup(head: ListNode, k: int) -> ListNode:
+def reverseKGroup(head, k):
     # Dummy node to simplify edge handling
     dummy = ListNode(0)
     dummy.next = head
     prev_group_end = dummy
-
     while True:
         # Find the kth node
         kth = prev_group_end
@@ -30,7 +28,6 @@ def reverseKGroup(head: ListNode, k: int) -> ListNode:
         prev_group_end.next = prev
         start.next = next_group_start
         prev_group_end = start  # Move to the end of the newly reversed group
-
     return dummy.next
 def build_linked_list(values):
     dummy = ListNode(0)

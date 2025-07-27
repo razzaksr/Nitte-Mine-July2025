@@ -1,5 +1,6 @@
 # Problem 1: Longest Increasing Subsequence
-nums = list(map(int, input().split()))
+# nums = list(map(int, input().split()))
+nums = [10,9,2,5,3,7,101,18]
 n = len(nums)
 
 # dp[i] represents length of LIS ending at index i
