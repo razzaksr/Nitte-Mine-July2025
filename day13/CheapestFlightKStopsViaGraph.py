@@ -19,7 +19,8 @@ src = 0
 dst = 3
 k = 1
 sol = Solution()
-print(sol.findCheapestPrice(n, flights, src, dst, k))  # Output: 700
+# print(sol.findCheapestPrice(n, flights, src, dst, k))  # Output: 700
+print(sol.findCheapestPrice(n, [[0,1,100],[1,2,100],[0,2,500]], 0, 2, 1))  # Output: 200
 '''
 Here’s a dry run of your `findCheapestPrice` implementation with the given graph and constraints:
 

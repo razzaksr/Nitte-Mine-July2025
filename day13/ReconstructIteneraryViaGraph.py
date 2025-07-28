@@ -20,6 +20,14 @@ print(sol.findItinerary(tickets))
 # Output: ['JFK', 'ATL', 'JFK', 'SFO', 'ATL', 'SFO']
 '''
 Here’s a detailed dry run table for the itinerary reconstruction using **Hierholzer's algorithm** with min-heaps to respect lexical order:
+lexical order:
+compare two string consider left and right
+first differing chaaracter determines the order
+if one string is prefix of another, the shortner string comes first
+
+eg:
+apple < banana< cheery
+cat < catalog < cater
 
 ---
 
