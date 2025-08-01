@@ -1,0 +1,85 @@
+Day 1:
+rotate-image-22-1
+subarray-sum-equals-k-16
+debt-offset-triplets
+www.hackerrank.com/problem-solvings-arrays
+
+
+
+
+Day 2:
+roman-numeral-formatter
+isomorphic-identifier-mapping
+ipv4-address-validator-1
+www.hackerrank.com/problem-solvings-string
+
+
+Day 3:
+merge-k-sorted-lists-12-1
+majority-element-finder-1
+josephus-survivor-position
+https://www.hackerrank.com/problem-solvings-recursion
+
+
+
+Day 4:
+product-feature-configurator
+system-performance-optimizer
+robotic-warehouse-efficiency-calculator
+www.hackerrank.com/problem-solvings-recursion-2
+
+
+
+Day 5:
+longest-increasing-subsequence-46-2
+maximum-sum-circular-subarray-4
+minimum-number-of-perfect-squares-1
+www.hackerrank.com/problem-solvings-dynamic-programming
+
+
+
+Day 6:
+gaming-tournament-prize-pool-calculator
+construction-site-safety-grid-planner
+data-center-server-rack-configuration
+www.hackerrank.com/problem-solvings-2d-dynamic-programming
+
+
+
+Day 7:
+next-greater-element-51
+time-needed-to-buy-tickets-3
+minimum-number-of-k-bit-flips
+www.hackerrank.com/problem-solvings-stack
+
+
+Day 8:
+packet-router-simulation
+prime-gap-balanced-subarrays
+number-of-recent-calls-2
+www.hackerrank.com/problem-solvings-queue
+
+
+Day 9:
+longest-unique-substring-5
+substring-permutation-check
+product-equivalent-subarray
+www.hackerrank.com/problem-solvings-sliding-window
+
+Day 10:
+insta-reel-feed-designer
+sum-of-two-reversed-numbers
+binary-list-to-decimal-conversion
+www.hackerrank.com/problem-solvings-linked-list
+
+Day 11:
+invert-binary-tree-6-4
+diameter-of-binary-tree-5-2
+construct-binary-tree-from-preorder-and-inorder-traversal-2-1
+www.hackerrank.com/problem-solvings-tree
+
+Day 12:
+surrounded-regions-3-1
+course-schedule-9-1
+number-of-islands-18
+www.hackerrank.com/problem-solvings-graph

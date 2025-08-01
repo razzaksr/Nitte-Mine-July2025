@@ -1,0 +1,401 @@
+
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>2D Dynamic Programming HackerRank Challenges</title>
+                    <style>
+                        body { font-family: 'Times New Roman', serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+                        .header { text-align: center; border-bottom: 3px solid #2563eb; padding-bottom: 20px; margin-bottom: 30px; }
+                        .header h1 { color: #1e40af; font-size: 28px; margin-bottom: 10px; }
+                        .challenge { margin-bottom: 40px; page-break-inside: avoid; }
+                        .challenge-header { background: #3b82f6; color: white; padding: 15px 20px; margin-bottom: 20px; }
+                        .challenge-header h2 { margin: 0; font-size: 22px; }
+                        .meta-info { display: table; width: 100%; margin-bottom: 20px; }
+                        .meta-box { display: table-cell; background: #f8fafc; padding: 15px; border-left: 4px solid #3b82f6; width: 50%; }
+                        .meta-box h4 { margin: 0 0 8px 0; color: #1e40af; font-size: 14px; text-transform: uppercase; font-weight: bold; }
+                        .section { margin-bottom: 25px; }
+                        .section h3 { color: #1f2937; font-size: 18px; margin-bottom: 10px; border-bottom: 2px solid #e5e7eb; padding-bottom: 5px; }
+                        .test-cases { margin-top: 20px; }
+                        .test-case { background: #f1f5f9; padding: 15px; border: 1px solid #cbd5e1; margin-bottom: 10px; }
+                        .test-case h5 { margin: 0 0 10px 0; color: #0f172a; font-size: 14px; font-weight: bold; }
+                        .test-case pre { background: #1e293b; color: #e2e8f0; padding: 10px; margin: 0; font-size: 12px; }
+                        .tag { background: #dbeafe; color: #1e40af; padding: 4px 12px; margin: 2px; font-size: 12px; font-weight: 500; }
+                    </style>
+                </head>
+                <body>
+                    
+        <div class="header">
+            <h1>2D Dynamic Programming HackerRank Challenges</h1>
+            <p><strong>Easy to Medium Difficulty Problems</strong></p>
+            <p><em>Real-world Scenarios &amp; Comprehensive Test Cases</em></p>
+        </div>
+
+        <!-- Challenge 1 -->
+        <div class="challenge">
+            <div class="challenge-header">
+                <h2>Challenge 1: Gaming Tournament Prize Pool Calculator</h2>
+            </div>
+            
+            <div class="meta-info">
+                <div class="meta-box">
+                    <h4>Name</h4>
+                    <p>Gaming Tournament Prize Pool Calculator</p>
+                </div>
+                <div class="meta-box">
+                    <h4>Description</h4>
+                    <p>Calculate maximum coins collectible in game grid using optimal path selection with dynamic programming techniques.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Problem Statement</h3>
+                <p>You're developing a mobile game for an esports tournament platform. Players navigate through a rectangular grid collecting coins, but there's a twist - they can only move right, down, or diagonally down-right. Each cell contains a certain number of coins (some cells might have 0 or even negative values representing obstacles).</p>
+                
+                <p>Players start at the top-left corner and must reach any cell in the bottom row to complete the level. Your task is to find the maximum coins a player can collect using the optimal path. This feature helps game designers balance difficulty levels and ensures fair reward distribution across different skill levels.</p>
+                
+                <p>The game mechanics are crucial for player engagement and tournament prize calculations, as each collected coin translates to tournament points.</p>
+            </div>
+
+            <div class="section">
+                <h3>Input Format</h3>
+                <ul>
+                    <li>First line contains two integers m and n (1 ≤ m, n ≤ 50) representing grid dimensions</li>
+                    <li>Next m lines contain n space-separated integers representing coins in each cell (-100 ≤ coins ≤ 100)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Constraints</h3>
+                <ul>
+                    <li>1 ≤ m, n ≤ 50</li>
+                    <li>-100 ≤ coins ≤ 100</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Output Format</h3>
+                <p>Print a single integer representing the maximum coins collectible from top-left to any bottom row cell.</p>
+            </div>
+
+            <div class="tags">
+                <span class="tag">Dynamic Programming</span>
+                <span class="tag">2D DP</span>
+                <span class="tag">Grid Traversal</span>
+                <span class="tag">Path Optimization</span>
+                <span class="tag">Game Development</span>
+            </div>
+
+            <div class="section">
+                <h3>Test Cases</h3>
+                <div class="test-cases">
+                    <div class="test-case">
+                        <h5>Test Case 1</h5>
+                        <pre>Input:
+3 3
+1 2 3
+4 5 6
+7 8 9
+
+Output:
+21</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 2</h5>
+                        <pre>Input:
+2 3
+1 -2 3
+4 5 -1
+
+Output:
+8</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 3</h5>
+                        <pre>Input:
+4 2
+1 2
+-1 3
+4 -2
+5 1
+
+Output:
+9</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 4</h5>
+                        <pre>Input:
+3 4
+5 1 3 2
+-2 4 1 6
+8 -1 2 3
+
+Output:
+16</pre>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <div class="test-case">
+                        <h5>Test Case 5</h5>
+                        <pre>Input:
+1 5
+1 2 3 4 5
+
+Output:
+15</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenge 2 -->
+        <div class="challenge">
+            <div class="challenge-header">
+                <h2>Challenge 2: Construction Site Safety Grid Planner</h2>
+            </div>
+            
+            <div class="meta-info">
+                <div class="meta-box">
+                    <h4>Name</h4>
+                    <p>Construction Site Safety Grid Planner</p>
+                </div>
+                <div class="meta-box">
+                    <h4>Description</h4>
+                    <p>Count safe paths through construction grid avoiding hazardous zones using dynamic programming for worker safety.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Problem Statement</h3>
+                <p>You're working as a safety engineer for a large construction company. The construction site is laid out as a grid, and workers need to move from the entrance (top-left) to various exit points (bottom-right). However, some grid cells contain hazardous zones (marked as 1) that workers cannot enter, while safe zones are marked as 0.</p>
+                
+                <p>Workers can only move right or down due to safety protocols and equipment constraints. Your task is to calculate the total number of safe paths from the entrance to the exit, avoiding all hazardous zones. This calculation is critical for:</p>
+                <ul>
+                    <li>Emergency evacuation planning</li>
+                    <li>Daily worker route scheduling</li>
+                    <li>Safety compliance reporting</li>
+                    <li>Risk assessment documentation</li>
+                </ul>
+                
+                <p>If there are no safe paths available, the answer should be 0, indicating the site needs redesign.</p>
+            </div>
+
+            <div class="section">
+                <h3>Input Format</h3>
+                <ul>
+                    <li>First line contains two integers m and n (1 ≤ m, n ≤ 20) representing grid dimensions</li>
+                    <li>Next m lines contain n space-separated integers (0 for safe zone, 1 for hazardous zone)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Constraints</h3>
+                <ul>
+                    <li>1 ≤ m, n ≤ 20</li>
+                    <li>Grid values are either 0 or 1</li>
+                    <li>Starting position (0,0) and ending position (m-1,n-1) are always safe (0)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Output Format</h3>
+                <p>Print a single integer representing the total number of safe paths from top-left to bottom-right.</p>
+            </div>
+
+            <div class="tags">
+                <span class="tag">Dynamic Programming</span>
+                <span class="tag">2D DP</span>
+                <span class="tag">Path Counting</span>
+                <span class="tag">Grid Navigation</span>
+                <span class="tag">Safety Planning</span>
+            </div>
+
+            <div class="section">
+                <h3>Test Cases</h3>
+                <div class="test-cases">
+                    <div class="test-case">
+                        <h5>Test Case 1</h5>
+                        <pre>Input:
+3 3
+0 0 0
+0 1 0
+0 0 0
+
+Output:
+2</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 2</h5>
+                        <pre>Input:
+2 2
+0 0
+0 0
+
+Output:
+2</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 3</h5>
+                        <pre>Input:
+3 2
+0 1
+0 0
+0 0
+
+Output:
+1</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 4</h5>
+                        <pre>Input:
+4 4
+0 0 0 0
+0 1 1 0
+0 0 1 0
+1 0 0 0
+
+Output:
+4</pre>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <div class="test-case">
+                        <h5>Test Case 5</h5>
+                        <pre>Input:
+3 3
+0 0 0
+1 1 1
+0 0 0
+
+Output:
+0</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenge 3 -->
+        <div class="challenge">
+            <div class="challenge-header">
+                <h2>Challenge 3: Data Center Server Rack Configuration</h2>
+            </div>
+            
+            <div class="meta-info">
+                <div class="meta-box">
+                    <h4>Name</h4>
+                    <p>Data Center Server Rack Configuration</p>
+                </div>
+                <div class="meta-box">
+                    <h4>Description</h4>
+                    <p>Calculate server configurations in rectangular racks using dynamic programming for optimal data center resource management.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Problem Statement</h3>
+                <p>You're designing an automated system for a cloud computing company's data center. Server racks are arranged in a rectangular grid format, and you need to determine how many ways servers can be configured in a given rectangular area.</p>
+                
+                <p>Each server configuration must fit perfectly in a rectangle of dimensions a×b within the larger grid of m×n. The servers can be oriented in two ways:</p>
+                <ul>
+                    <li>Horizontal: a×b rectangle</li>
+                    <li>Vertical: b×a rectangle</li>
+                </ul>
+                
+                <p>Your task is to count the total number of ways to place one rectangular server configuration within the grid boundaries. This helps data center managers:</p>
+                <ul>
+                    <li>Optimize server placement strategies</li>
+                    <li>Plan capacity expansion</li>
+                    <li>Calculate configuration possibilities for different hardware types</li>
+                    <li>Automate rack space allocation</li>
+                </ul>
+                
+                <p>The algorithm must handle various server sizes and grid dimensions efficiently for real-time resource management.</p>
+            </div>
+
+            <div class="section">
+                <h3>Input Format</h3>
+                <ul>
+                    <li>First line contains four integers m, n, a, b (1 ≤ m, n ≤ 15, 1 ≤ a, b ≤ min(m,n))</li>
+                    <li>m, n represent the grid dimensions</li>
+                    <li>a, b represent the server configuration dimensions</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Constraints</h3>
+                <ul>
+                    <li>1 ≤ m, n ≤ 15</li>
+                    <li>1 ≤ a, b ≤ min(m,n)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Output Format</h3>
+                <p>Print a single integer representing the total number of ways to place the rectangular server configuration.</p>
+            </div>
+
+            <div class="tags">
+                <span class="tag">Dynamic Programming</span>
+                <span class="tag">2D DP</span>
+                <span class="tag">Rectangle Placement</span>
+                <span class="tag">Combinatorics</span>
+                <span class="tag">Data Center Management</span>
+            </div>
+
+            <div class="section">
+                <h3>Test Cases</h3>
+                <div class="test-cases">
+                    <div class="test-case">
+                        <h5>Test Case 1</h5>
+                        <pre>Input:
+3 3 2 2
+
+Output:
+4</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 2</h5>
+                        <pre>Input:
+4 5 2 3
+
+Output:
+12</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 3</h5>
+                        <pre>Input:
+2 2 1 1
+
+Output:
+4</pre>
+                    </div>
+                    <div class="test-case">
+                        <h5>Test Case 4</h5>
+                        <pre>Input:
+5 4 3 2
+
+Output:
+12</pre>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <div class="test-case">
+                        <h5>Test Case 5</h5>
+                        <pre>Input:
+6 6 2 2
+
+Output:
+25</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; color: #6b7280;">
+            <p><em>Generated Dynamic Programming Challenges - Ready for Implementation</em></p>
+            <p><strong>Total: 3 Challenges | 15 Test Cases | Real-world Applications</strong></p>
+        </div>
+    
+                </body>
+                </html>
+            

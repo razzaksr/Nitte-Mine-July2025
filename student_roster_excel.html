@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Roster - Excel Download</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .download-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .download-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            margin: 10px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .preview-section {
+            margin-top: 30px;
+        }
+        
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .preview-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .preview-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .preview-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .preview-table tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.2s ease;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            min-width: 150px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .scroll-container {
+            max-height: 500px;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Student Roster</h1>
+        
+        <div class="download-section">
+            <h2>📥 Download Options</h2>
+            <p>Click the buttons below to download the student roster in your preferred format:</p>
+            <button class="download-btn" onclick="downloadExcel()">📊 Download Excel (.xlsx)</button>
+            <button class="download-btn" onclick="downloadCSV()">📋 Download CSV</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalStudents">0</div>
+                <div>Total Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="maleCount">0</div>
+                <div>Male Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="femaleCount">0</div>
+                <div>Female Students</div>
+            </div>
+        </div>
+        
+        <div class="preview-section">
+            <h2>👥 Student List Preview</h2>
+            <div class="scroll-container">
+                <table class="preview-table" id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Registration No</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const studentData = [
+            {slNo: 1, firstName: "Raksha", lastName: "Kini", regNo: "nnm22ad027"},
+            {slNo: 2, firstName: "Manish", lastName: "Kumar", regNo: "nnm22ad029"},
+            {slNo: 3, firstName: "Samskrithi", lastName: "S", regNo: "nnm22is138"},
+            {slNo: 4, firstName: "Bhuvan", lastName: "D Shetty", regNo: "nnm22is034"},
+            {slNo: 5, firstName: "Charan", lastName: "G", regNo: "nnm22cs045"},
+            {slNo: 6, firstName: "Darshini", lastName: "U Shetty", regNo: "nnm22cs055"},
+            {slNo: 7, firstName: "Hrishikesh", lastName: "B", regNo: "nnm22ec061"},
+            {slNo: 8, firstName: "Hritwika", lastName: "Varma", regNo: "nnm22is060"},
+            {slNo: 9, firstName: "Jithendra", lastName: "Shenoy", regNo: "nnm22ec069"},
+            {slNo: 10, firstName: "Meghna", lastName: "", regNo: "nnm22is092"},
+            {slNo: 11, firstName: "Parikshith", lastName: "Bhargav K R", regNo: "nnm22is109"},
+            {slNo: 12, firstName: "Paritosh", lastName: "Jha", regNo: "nnm22cc037"},
+            {slNo: 13, firstName: "Prinston", lastName: "Coelho", regNo: "nnm22is121"},
+            {slNo: 14, firstName: "Rhea", lastName: "Dmello", regNo: "nnm22ad044"},
+            {slNo: 15, firstName: "Shravan", lastName: "Kumar", regNo: "nnm22is154"},
+            {slNo: 16, firstName: "Swaraj", lastName: "Hegde", regNo: "nnm22is180"},
+            {slNo: 17, firstName: "Swaroop", lastName: "Kumar", regNo: "nnm22is182"},
+            {slNo: 18, firstName: "Swasthik", lastName: "S Devadiga", regNo: "nnm22ad059"},
+            {slNo: 19, firstName: "Vaishak", lastName: "M C", regNo: "nnm22is194"},
+            {slNo: 20, firstName: "Vinay", lastName: "Kamath", regNo: "nnm22ad063"},
+            {slNo: 21, firstName: "Vishnu", lastName: "Bhat", regNo: "nnm22is203"},
+            {slNo: 22, firstName: "Adithi", lastName: "Pai S", regNo: "nnm22is008"},
+            {slNo: 23, firstName: "Adithya", lastName: "Shenoy", regNo: "nnm22cs010"},
+            {slNo: 24, firstName: "Aishik", lastName: "Roy", regNo: "nnm22am002"},
+            {slNo: 25, firstName: "Ameesha", lastName: "J Ruzario", regNo: "nnm22cs019"},
+            {slNo: 26, firstName: "Bhuvan", lastName: "R Shetty", regNo: "nnm22is035"},
+            {slNo: 27, firstName: "Charith", lastName: "U", regNo: "nnm22cs046"},
+            {slNo: 28, firstName: "Deeksha", lastName: "Ramachandra", regNo: "nnm22cs056"},
+            {slNo: 29, firstName: "Dilshan", lastName: "Divan Dsouza", regNo: "nnm22cs068"},
+            {slNo: 30, firstName: "Gurudutt", lastName: "R Pai", regNo: "nnm22cc022"},
+            {slNo: 31, firstName: "Karthik", lastName: "Shashidhar Salian", regNo: "nnm22cs087"},
+            {slNo: 32, firstName: "Mahesh", lastName: "Kamath K S", regNo: "nnm22is086"},
+            {slNo: 33, firstName: "Nibha", lastName: "S Rao", regNo: "nnm22am034"},
+            {slNo: 34, firstName: "Nikhil", lastName: "Shetty", regNo: "nnm22cs109"},
+            {slNo: 35, firstName: "Preksha", lastName: "Jain", regNo: "nnm22am043"},
+            {slNo: 36, firstName: "Sahana", lastName: "H S", regNo: "nnm22cs150"},
+            {slNo: 37, firstName: "Sai", lastName: "Balaji", regNo: "nnm22is135"},
+            {slNo: 38, firstName: "Shamanth", lastName: "Hegde", regNo: "nnm23cs511"},
+            {slNo: 39, firstName: "Swaroop", lastName: "D Shetty", regNo: "nnm22is181"},
+            {slNo: 40, firstName: "Thanush", lastName: ".", regNo: "nnm22is188"},
+            {slNo: 41, firstName: "Vinit", lastName: ".", regNo: "nnm22is201"},
+            {slNo: 42, firstName: "Anup", lastName: "Rajesh Prabhu", regNo: "nnm22cs030"},
+            {slNo: 43, firstName: "Bianca", lastName: "Gelesia Martis", regNo: "nnm22is036"},
+            {slNo: 44, firstName: "Britney", lastName: "Genelia Martis", regNo: "nnm22cs043"},
+            {slNo: 45, firstName: "Dhanush", lastName: "Lokesh Naik", regNo: "nnm22is044"},
+            {slNo: 46, firstName: "Dinesh", lastName: "Acharya", regNo: "nnm22cs064"},
+            {slNo: 47, firstName: "Nandan", lastName: "Rajesh Pai", regNo: "nandanrp09@gmail.com"},
+            {slNo: 48, firstName: "Nikhil", lastName: "Yuvaraj Bangera", regNo: "nnm22cc008"},
+            {slNo: 49, firstName: "Riyaz", lastName: "Ahmed", regNo: "nnm22is131"},
+            {slNo: 50, firstName: "Vamshikrishna", lastName: "Murali", regNo: "nnm22cc066"},
+            {slNo: 51, firstName: "Vikram", lastName: "Kulal", regNo: "nnm22cs207"},
+            {slNo: 52, firstName: "Aastha", lastName: "Nitin Shetty", regNo: "nnm22cs003"},
+            {slNo: 53, firstName: "Amrutha", lastName: "R Rao", regNo: "nnm22am023"},
+            {slNo: 54, firstName: "Mayur", lastName: "V Udupa", regNo: "nnm22am031"},
+            {slNo: 55, firstName: "Mohamad", lastName: "Raed", regNo: "nnm22cs099"},
+            {slNo: 56, firstName: "Neil", lastName: "Mammen Prakash", regNo: "nnm22is104"},
+            {slNo: 57, firstName: "Prathyush", lastName: "Prakash Bhandary", regNo: "nnm22cs135"},
+            {slNo: 58, firstName: "Shreeram", lastName: "P Bhandary", regNo: "nnm22cs171"},
+            {slNo: 59, firstName: "Sonal", lastName: "Mayola Sequeira", regNo: "nnm22is171"},
+            {slNo: 60, firstName: "Tejas", lastName: "M Naik", regNo: "nnm23cs513"},
+            {slNo: 61, firstName: "Ananya", lastName: "V", regNo: "nnm22is016"},
+            {slNo: 62, firstName: "Erramsetti", lastName: "Yashasree", regNo: "nnm22cc055"}
+        ];
+
+        function populateTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            studentData.forEach(student => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = student.slNo;
+                row.insertCell(1).textContent = student.firstName;
+                row.insertCell(2).textContent = student.lastName;
+                row.insertCell(3).textContent = student.regNo;
+            });
+        }
+
+        function updateStats() {
+            const total = studentData.length;
+            document.getElementById('totalStudents').textContent = total;
+            
+            // Simple gender estimation based on common names
+            const maleNames = ['Manish', 'Bhuvan', 'Charan', 'Hrishikesh', 'Jithendra', 'Parikshith', 'Paritosh', 'Prinston', 'Shravan', 'Swaraj', 'Swaroop', 'Swasthik', 'Vaishak', 'Vinay', 'Vishnu', 'Adithya', 'Aishik', 'Dilshan', 'Gurudutt', 'Karthik', 'Mahesh', 'Nikhil', 'Shamanth', 'Thanush', 'Vinit', 'Anup', 'Dhanush', 'Dinesh', 'Nandan', 'Riyaz', 'Vamshikrishna', 'Vikram', 'Mayur', 'Mohamad', 'Neil', 'Prathyush', 'Shreeram', 'Tejas'];
+            
+            let maleCount = 0;
+            studentData.forEach(student => {
+                if (maleNames.includes(student.firstName)) {
+                    maleCount++;
+                }
+            });
+            
+            const femaleCount = total - maleCount;
+            document.getElementById('maleCount').textContent = maleCount;
+            document.getElementById('femaleCount').textContent = femaleCount;
+        }
+
+        function downloadExcel() {
+            const ws = XLSX.utils.json_to_sheet(studentData.map(student => ({
+                'Serial Number': student.slNo,
+                'First Name': student.firstName,
+                'Last Name': student.lastName,
+                'Registration Number': student.regNo
+            })));
+            
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Student Roster");
+            
+            XLSX.writeFile(wb, "Student_Roster.xlsx");
+        }
+
+        function downloadCSV() {
+            const csvContent = [
+                ['Serial Number', 'First Name', 'Last Name', 'Registration Number'],
+                ...studentData.map(student => [student.slNo, student.firstName, student.lastName, student.regNo])
+            ].map(row => row.map(field => `"${field}"`).join(',')).join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'Student_Roster.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize the page
+        populateTable();
+        updateStats();
+    </script>
+</body>
+</html>

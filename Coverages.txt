@@ -1,0 +1,181 @@
+Coverages:
+
+day1: 14/07/2025
+Overview about this 14 days programme
+Objective of algorithms and problem solving's
+discussed on major operations in application development such as CRUD
+Data Structures Overview
+begun solving interview problems on Array/ List, 
+Two Sum
+Find Second Max
+Dutch Flag Algorithm
+Moving Zero's to the end
+Kaden's algorithm
+Pivot Position
+Stock Market Analysis - Best time to buy and sell
+Insert new intervals
+
+
+
+day2: 15/07/2025
+Discussion and implementation of array/ List problem continued with following problems
+Twisted Prime
+Prime with in boundary of two given list
+Find and deduct extra withdraw charges in account
+Find Distinct values in list
+Find Missing Min value in the unsorted list
+Then stepped into string problem discussion with followings
+Grouping given list anagrams
+X into O
+Find String A is subsequence of String B
+Validate IPV4 with brute force 
+Regular expression implemented in KYC
+
+day3: 16/07/2025
+Discussion and implementation of day one Hacker Rank contest Challenges done
+Given overview, objective and usages of recursion and implementation with following
+Finding Sum of list using Recursion
+Finding Max of list using Recursion
+Find Prefix and Postfix Sum of list
+Coin Change problem's solution via divide & conquer and discussed drawbacks of this solution
+Inversion count using Recursion
+
+
+day4: 17/07/2025
+Discussion and implementation of the day two Hacker Rank contest challenges done
+Discussion continued on Recursion with divide and conquer with implementation of followings
+Find the possibilities of search in old keypad phone when we 23 - > ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+House Security Automation, prevents houses based value using recursion
+Binary search
+Climbing stairs via divide and conquer
+Factorial via divide and conquer
+Fibonacci via divide and conquer
+
+
+day5: 18/07/2025
+Recursion continued with following problem statement
+Using recursion generating parenthesis
+Quick Select algorithm to find top kth element in the list
+Introduction and usage of Dynamic programming
+Pros and Cons of DP
+Discussion and implementation done on followings,
+Factorial Using DP
+Climbing Stairs using DP
+Coin Change using DP
+Jump Game 1 using DP
+Kaden's integration with DP
+
+day 6: 19/07/2025
+Decoding Ways using one dimensional DP
+Discussion and implementation done on previous day coding challenge
+illustration given on two dimensional dynamic programming
+Implementation done on followings,
+two dimensional dynamic programming of robot navigation in the warehouse
+
+
+
+day 7: 21/07/2025
+2D dynamic programming overview has given
+Problem statements of following has been discussed with implementation
+Find Minimum path
+Find minimum count to word conversion(Edit distance)
+DNA Analysis via Longest Common Subsequence
+1/0 Knapsack
+Stock Market analysis via Longest Palindrome Subsequence
+Optimising space complexity in dynamic programming
+
+
+day 8: 22/07/2025
+Implemented Optimized solution to the Length of Largest Palindromic Sequence in Pattern
+Overview has given on stack structure
+Implementation of following done using Stack
+Find Next Warmer Temperature
+Valid Parenthesis
+Reverse Polish Notation Evaluation
+Find Maximum Rectangular Are in Histogram
+Bike Fleet
+
+day 9: 23/07/2025
+Queue Overview given with its basic behaviour
+Queue implementation done on following problem statements
+Find First Non repeating char in stream
+Delivering Boxes from Storage to Ports
+Find the day when plants die no more based on pesticide
+Reveal Cards In Increasing Order
+Minimum Sum of Values by Dividing Array
+Number of Students Unable to Eat Lunch
+
+day 10: 24/07/2025
+Implementation of Dota2 game via Queue has done
+Overview and features of sliding window has discussed and following problem statements were implemented
+Minimum Window Sub-String
+Maximum Window
+Reverse List with Window sized
+Replace Longest repeat and Find Maximum substring
+
+day 11: 25/07/2025
+Subarrays with K Different Integers using Sliding Window
+Overview was given about how linked list structured and types of it
+Implementation of following problem statements using linked list
+Merge k Sorted Lists
+LRU Cache
+Reverse Nodes in k-Group
+All O`one Data Structure
+
+
+day 12: 26/07/2025
+Debriefing session on Sliding window, single linked list
+Addressed with following implementation
+Fixed Sliding window to perform reversal in window size
+Fixed Window to find sub sum
+Singly Linked List creation
+Insertion at head and last
+Traversing over array
+Read between ranges
+Merged two individual links
+
+
+
+day13: 28/07/2025
+Overview of Tree, Types and Applications
+Tree related problem statements of following
+Check Given binary Tree is Balanced or not
+Validate BST
+Max Path Sum In Tree
+Graph overview, objectives, applications
+Find cheapest flight with given stops
+Reconstruct itinerary using lexical order in the Graph
+
+
+
+day 14: 30/07/2025
+Introduction given about System Design Engineer
+Roles and Responsibility of Designer
+High Level Design, FRS, CRS
+Low Level Design and its layers
+Architecture of LLD
+Presentation Layer, Service Layer, DAO Layer, Data Layer
+Implementation of LLD using python with MySQL of Loan Entity (BFSI) via modular approach
+CRUD and CLI has implemented
+Teams and use cases distributed
+
+
+day 15: 31/07/2025
+Overview of Files, read, write
+Discussion on pickling and unpickling
+Implementation of File as Data logic in previous LLD of Loans
+Demonstrated building file dao
+Connection with existing service
+Overview of Modular approach
+Enabled the switch data sources between database and file based on user inputs
+Implemented Multi language messages in existing console LLD App such as Kannada, Hindi, English
+Student's assigned Capstone use case projects were reviewed post lunch
+
+
+
+Use case:
+List of objects contains name of file/directory, date of modified, size and type. quite like file explorer
+among we can perform following operations:
+1. sort by date, type, name, type
+2. order by ascending, descending based on date, type, name, type
+3. new file/folder and sort it by default behaviour

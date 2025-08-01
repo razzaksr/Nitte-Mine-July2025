@@ -1,0 +1,447 @@
+ 1. Sum of Natural Numbers
+Natural numbers = 1, 2, 3, 4, 5, ...
+To find the sum, just add them:
+Example: 1 + 2 + 3 + 4 + 5 = 15
+Used in: total items, score counting
+🔸 Steps:
+> Start from 1
+> Add each number up to your limit
+> Show the final total
+
+Solution :
+n = 5
+sum = 0
+for i in range(1, n+1):
+    sum += i
+print("Sum of first", n, "natural numbers is:", sum)
+-----------------------------------------------------------------------------
+ 2. Fibonacci Sequence
+Starts with: 0 and 1
+Each number = sum of previous two numbers
+
+🔸 Steps:
+> Start with 0, 1
+> Add them → 0+1 = 1
+> Then 1+1 = 2, 1+2 = 3, 2+3 = 5...
+👉 Sequence: 0, 1, 1, 2, 3, 5, 8, …
+
+Solution :
+n = 10
+a, b = 0, 1
+print("Fibonacci Sequence:")
+for i in range(n):
+    print(a, end=" ")
+    a, b = b, a + b
+-----------------------------------------------------------------------------
+ 3. Prime Numbers
+A number that has only 2 factors: 1 and itself
+Example: 2, 3, 5, 7, 11, ...
+
+🔸 Steps:
+> Take a number (say 7)
+> Try dividing it by 2, 3, 4...
+> If no number divides it evenly, it’s prime
+
+Solution :
+for num in range(2, 21):
+    is_prime = True
+    for i in range(2, int(num**0.5)+1):
+        if num % i == 0:
+            is_prime = False
+            break
+    if is_prime:
+        print(num, end=" ")
+-----------------------------------------------------------------------------
+ 4. Armstrong Number
+Number = sum of cubes of its digits
+
+List of Armstrong Number:
+🔹 3-digit Armstrong numbers:
+153 → 1³ + 5³ + 3³ = 1 + 125 + 27 = 153 ✅
+370 → 3³ + 7³ + 0³ = 27 + 343 + 0 = 370 ✅
+371 → 3³ + 7³ + 1³ = 371 ✅
+407 → 4³ + 0³ + 7³ = 407 ✅
+
+🔹 4-digit Armstrong numbers:
+1634 → 1⁴ + 6⁴ + 3⁴ + 4⁴ = 1 + 1296 + 81 + 256 = 1634 ✅
+8208, 9474 (also Armstrong numbers)
+
+Example: 153 → 1³ + 5³ + 3³ = 1 + 125 + 27 = 153 ✔️
+🔸 Steps:
+> Break number into digits: 1, 5, 3
+> Cube each digit: 1³, 5³, 3³
+> Add them
+> Check if total equals the original number
+
+Solution :
+num = 153
+temp = num
+sum = 0
+while num > 0:
+    digit = num % 10
+    sum += digit ** 3
+    num //= 10
+if temp == sum:
+    print(temp, "is an Armstrong number")
+else:
+    print(temp, "is not an Armstrong number")
+-----------------------------------------------------------------------------
+ 5. Perfect Number
+A number whose factors (excluding itself) add up to the number
+Sample perfect numbers : 6, 28, 496, 8128, 
+Example: 6 → factors: 1, 2, 3 → 1+2+3 = 6 ✔️
+🔸 Steps:
+> Find all divisors of the number
+> Exclude the number itself
+> Add them
+> If sum = number → it's perfect
+
+Solution :
+n = 28
+sum = 0
+for i in range(1, n):
+    if n % i == 0:
+        sum += i
+if sum == n:
+    print(n, "is a Perfect Number")
+else:
+    print(n, "is not a Perfect Number")
+-----------------------------------------------------------------------------
+ 6. Square Numbers
+A number multiplied by itself
+
+Example: 3×3 = 9, 4×4 = 16
+
+🔸 Steps:
+> Take a number
+> Multiply it by itself
+> The result is a square number
+
+👉 Examples: 1, 4, 9, 16, 25...
+for i in range(1, 11):
+    print(i*i, end=" ")
+-----------------------------------------------------------------------------
+ 7. Triangular Numbers
+Formula:
+Tn=n(n+1)/2
+ 
+Where:
+
+n is the term number (1st, 2nd, 3rd...)
+
+T_n is the nth triangular number
+
+📘 Step-by-Step Examples:
+n	Formula	Value	Triangular Number
+1	1 × (1 + 1) / 2	2 / 2	1
+2	2 × (2 + 1) / 2	6 / 2	3
+3	3 × (3 + 1) / 2	12/ 2	6
+4	4 × (4 + 1) / 2	20/ 2	10
+5	5 × (5 + 1) / 2	30/ 2	15
+6	6 × (6 + 1) / 2	42/ 2	21
+7	7 × (7 + 1) / 2	56/ 2	28
+
+So the first few triangular numbers are:
+
+👉 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
+
+🔸 Visual Example (for 3):
+*
+* *
+* * *
+There are 6 dots in total → T₃ = 6
+
+🧠 Real-Life Uses:
+Arranging bowling pins 🎳
+Seating in triangle-shaped arrangements
+
+Solution:
+for i in range(1, 7):
+    t = int(i * (i + 1) / 2)
+    print(t, end=" ")
+-----------------------------------------------------------------------------
+ 8. Look-and-Say Sequence
+You "say" what you "see"
+
+Start: 1 → "one 1" → 11 → "two 1s" → 21...
+
+🔸 Steps:
+> Start with "1"
+> Count digits and say it
+
+Keep repeating this
+>👉 1 → 11 → 21 → 1211 → 111221...
+
+Solution:
+term = "1"
+print(term)
+
+for _ in range(5):
+    result = ""
+    count = 1
+    for j in range(1, len(term)):
+        if term[j] == term[j-1]:
+            count += 1
+        else:
+            result += str(count) + term[j-1]
+            count = 1
+    result += str(count) + term[-1]
+    print(result)
+    term = result
+-----------------------------------------------------------------------------
+ 9. Repunit Numbers
+Made only with 1s
+Example: 1, 11, 111, 1111...
+
+🔸 Steps:
+> Start with 1
+> Add one more 1 each time
+
+Solution:
+num = ""
+for i in range(5):
+    num += "1"
+    print(num)
+-----------------------------------------------------------------------------
+ 10. Abundant Numbers
+Abundant (factors sum > number)
+But not semi-perfect (no subset of factors adds to number)
+🔸 Example: 70 is a weird number
+🔸 Steps:
+> Find all factors
+> Add them – if greater → abundant
+> Try all combinations – if none adds up to number → weird
+
+Example:
+🔹 12
+Divisors of 12: 1, 2, 3, 4, 6
+Sum = 1 + 2 + 3 + 4 + 6 = 16
+Since 16 > 12 → ✅ 12 is Abundant
+
+🔹 18
+Divisors: 1, 2, 3, 6, 9
+Sum = 21 > 18 → ✅ Abundant
+
+❌ Not Abundant:
+8 → Divisors: 1, 2, 4 → Sum = 7 < 8 → ❌
+
+Solution:
+n = 70
+sum = 0
+for i in range(1, n):
+    if n % i == 0:
+        sum += i
+if sum > n:
+    print(n, "is an Abundant number")
+else:
+    print(n, "is not an Abundant number")
+-----------------------------------------------------------------------------
+ 11. Niven Numbers
+A number that is divisible by sum of its digits
+
+Examples:
+🔹 18
+Digits: 1 + 8 = 9
+
+18 ÷ 9 = 2 → ✅ Niven Number
+
+🔹 21
+Digits: 2 + 1 = 3
+
+21 ÷ 3 = 7 → ✅ Niven Number
+
+❌ Not a Niven Number:
+19 → 1 + 9 = 10 → 19 ÷ 10 = 1.9 ❌
+
+ List of Niven Numbers: 
+1, 2, 3, 4, 5, 6, 7, 8, 9, 
+10, 12, 18, 20, 21, 24, 27, 30, 36, 
+🔸 Steps:
+> Find sum of digits
+> Check if number is divisible by the sum
+n = 18
+temp = n
+digit_sum = 0
+while temp > 0:
+    digit_sum += temp % 10
+    temp //= 10
+if n % digit_sum == 0:
+    print(n, "is a Niven Number")
+else:
+    print(n, "is not a Niven Number")
+-----------------------------------------------------------------------------
+ 12. Automorphic Numbers
+A number whose square ends in the same digits
+
+Example: 25² = 625 → ends with 25 ✔️
+
+🔸 Steps:
+> Find square of number
+> Check if it ends with the number itself
+
+List of Automorphic Numbers
+1, 5, 6, 25, 76, 376, 625, 9376, 90625
+
+Solution:
+n = 25
+square = n * n
+if str(square).endswith(str(n)):
+    print(n, "is an Automorphic number")
+else:
+    print(n, "is not an Automorphic number")
+-----------------------------------------------------------------------------
+ 13. Buzz Numbers
+Number ends with 7 or divisible by 7
+
+Example: 27 → ends with 7 ✔️
+49 → divisible by 7 ✔️
+
+🔸 Steps:
+> Check if number ends in 7
+> Or check if number % 7 == 0
+
+List of Buzz Numbers
+7, 14, 17, 21, 27, 28, 35, 37, 42, 47, 49, 56, 57, 63, 67, 70, 77, 87, 91, 97, 98
+
+Solution:
+n = 1007
+if n % 7 == 0 or str(n).endswith("7"):
+    print(n, "is a Buzz Number")
+else:
+    print(n, "is not a Buzz Number")
+-----------------------------------------------------------------------------
+ 14. Duck Number
+ 
+A number that has zero(s) but not at the beginning.
+
+Example: 3210
+
+Starts with 3 
+
+Contains zero 
+ So, it's a Duck Number
+
+Not a Duck Number:
+0123 → Starts with 0 ❌
+
+Real time Use: 
+In validations like bank account numbers or IDs where leading zeros are not allowed.
+
+Solution:
+num = "3210"
+if '0' in num[1:]:
+    print("Duck Number")
+else:
+    print("Not Duck Number")
+-----------------------------------------------------------------------------
+ 15. Happy Number
+What is it?
+A number is Happy if you repeatedly sum the squares of its digits, and it eventually becomes 1.
+
+Example: 19
+
+1² + 9² = 1 + 81 = 82
+8² + 2² = 64 + 4 = 68
+6² + 8² = 36 + 64 = 100
+1² + 0² + 0² = 1
+ Ends in 1 → Happy Number
+
+Real time use:
+Puzzle games, programming exercises, number patterns.
+
+List of Happy number:
+1, 7, 10, 13, 19, 23, 28, 31, 32, 44,
+49, 68, 70, 79, 82, 86, 91, 94, 97, 100
+
+Solution:
+n = 19
+seen = set()
+while n != 1 and n not in seen:
+    seen.add(n)
+    n = sum(int(d)**2 for d in str(n))
+print("Happy Number" if n == 1 else "Unhappy Number")
+-----------------------------------------------------------------------------
+16. Niven Number
+What is it?
+A number is a Harshad Number if it is divisible by the sum of its digits.
+
+Example: 18
+
+Digits: 1 + 8 = 9
+
+18 % 9 = 0 
+⇒ Harshad Number
+
+Where it's used?
+In mathematics, number patterns, and digital root checks.
+n = 18
+sum_digits = sum(int(d) for d in str(n))
+print("Harshad Number" if n % sum_digits == 0 else "Not Harshad")
+-----------------------------------------------------------------------------
+ 17. Neon Number
+What is it?
+A number is a Neon Number if the sum of digits of its square equals the number itself.
+
+Example: 9
+
+9 × 9 = 81
+
+8 + 1 = 9 
+⇒ Neon Number
+
+Real time Use: Puzzle programming, number games.
+
+List of Neon Number:
+0, 1, 9
+
+Solution:
+n = 9
+square = n * n
+digit_sum = sum(int(d) for d in str(square))
+print("Neon Number" if digit_sum == n else "Not Neon Number")
+-----------------------------------------------------------------------------
+18. Palindrome Number
+What is it?
+A number that remains the same when reversed.
+
+Example: 16461
+
+Reversed: 16461 
+⇒ Palindrome
+
+Where it's used?
+Data structure problems, string processing, pattern checking.
+n = "16461"
+print("Palindrome" if n == n[::-1] else "Not Palindrome")
+-----------------------------------------------------------------------------
+19. Special Number
+What is it?
+A number where the sum of factorials of digits equals the number itself.
+
+Example: 145
+
+1! = 1
+
+4! = 24
+
+5! = 120
+
+Sum = 1 + 24 + 120 = 145  ⇒ Special Number
+
+List of Special numbers:
+1, 2, 145, 40585
+
+Real time usage: 
+Advanced math puzzles, programming logic building.
+
+Solution:
+n = 145
+temp = n
+total = 0
+for d in str(n):
+    fact = 1
+    for i in range(1, int(d)+1):
+        fact *= i
+    total += fact
+print("Special Number" if total == n else "Not Special")
+====================================================

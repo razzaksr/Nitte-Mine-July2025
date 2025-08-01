@@ -1,0 +1,35 @@
+import winsound
+
+winsound.Beep(2500,5000)
+----------------------------
+print("\U0001F600")
+print("\U0001F917")
+print("\U0001F637")
+print("\U0001F62A")
+print("\U0001F618")
+print("\U0001F606")
+print("\U0001F923")
+print("-------------")
+print("\U0001F608") 
+print("\U0001F44C")
+
+#https://unicode-table.com/en/sets/emoji/
+#https://unicode.org/emoji/charts/full-emoji-list.html
+--------------------------
+import cowsay
+
+cowsay.daemon("This is sample")
+cowsay.cow("This is sample")
+cowsay.dragon("This is sample")
+cowsay.kitty("This is sample")
+cowsay.milk("This is sample")
+cowsay.pig("This is sample")
+cowsay.turtle("This is sample")
+cowsay.turkey("This is sample")
+----------------------------
+
+import calendar
+ 
+for i in range(1,13):
+    print(calendar.month(2022,i))
+

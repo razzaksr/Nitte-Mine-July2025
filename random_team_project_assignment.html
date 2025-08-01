@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Team-Use Case Assignment</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .controls > div {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .download-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .download-btn:hover {
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .team-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #3498db;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .team-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .use-case-title {
+            font-size: 1.2em;
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .domain {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .member {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .member-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .member-reg {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .features {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+        }
+        
+        .features-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .assignment-info {
+            text-align: center;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            h1 { font-size: 2em; }
+            .team-header { flex-direction: column; align-items: flex-start; }
+            .members { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 Random Team Assignment</h1>
+        <p class="subtitle">15 Teams × 15 Use Cases - Randomly Distributed</p>
+        
+        <div class="assignment-info">
+            <strong>Assignment Date:</strong> <span id="currentDate"></span><br>
+            <strong>Total Teams:</strong> 15 | <strong>Total Use Cases:</strong> 15<br>
+            <strong>Implementation:</strong> Python OOP + Dictionary
+        </div>
+        
+        <div class="controls">
+            <button onclick="shuffleAssignments()">🔄 Shuffle Again</button>
+            <div style="margin-top: 15px;">
+                <button class="download-btn" onclick="downloadAsExcel()">📊 Excel (.xlsx)</button>
+                <button class="download-btn" onclick="downloadAsCSV()">📋 CSV</button>
+                <button class="download-btn" onclick="downloadAsPDF()">📄 PDF</button>
+                <button class="download-btn" onclick="downloadAsJSON()">🔧 JSON</button>
+                <button class="download-btn" onclick="downloadAsText()">📝 Text</button>
+            </div>
+        </div>
+        
+        <div id="assignments"></div>
+    </div>
+
+    <script>
+        const teams = [
+            {
+                name: "Team 1",
+                members: [
+                    { name: "Raksha Kini", reg: "nnm22ad027" },
+                    { name: "Swaroop Kumar", reg: "nnm22is182" },
+                    { name: "Sahana H S", reg: "nnm22cs150" },
+                    { name: "Darshini U Shetty", reg: "nnm22cs055" }
+                ]
+            },
+            {
+                name: "Team 2",
+                members: [
+                    { name: "Manish Kumar", reg: "nnm22ad029" },
+                    { name: "Vishnu Bhat", reg: "nnm22is203" },
+                    { name: "Anup Rajesh Prabhu", reg: "nnm22cs030" },
+                    { name: "Adithya Shenoy", reg: "nnm22cs010" }
+                ]
+            },
+            {
+                name: "Team 3",
+                members: [
+                    { name: "Swasthik S Devadiga", reg: "nnm22ad059" },
+                    { name: "Sai Balaji", reg: "nnm22is135" },
+                    { name: "Mohamad Raed", reg: "nnm22cs099" },
+                    { name: "Karthik Shashidhar Salian", reg: "nnm22cs087" }
+                ]
+            },
+            {
+                name: "Team 4",
+                members: [
+                    { name: "Rhea Dmello", reg: "nnm22ad044" },
+                    { name: "Swaroop D Shetty", reg: "nnm22is181" },
+                    { name: "Dilshan Divan Dsouza", reg: "nnm22cs068" },
+                    { name: "Hrishikesh B", reg: "nnm22ec061" }
+                ]
+            },
+            {
+                name: "Team 5",
+                members: [
+                    { name: "Vinay Kamath", reg: "nnm22ad063" },
+                    { name: "Ananya V", reg: "nnm22is016" },
+                    { name: "Prathyush Prakash Bhandary", reg: "nnm22cs135" },
+                    { name: "Jithendra Shenoy", reg: "nnm22ec069" }
+                ]
+            },
+            {
+                name: "Team 6",
+                members: [
+                    { name: "Swaraj Hegde", reg: "nnm22is180" },
+                    { name: "Bianca Gelesia Martis", reg: "nnm22is036" },
+                    { name: "Shamanth Hegde", reg: "nnm23cs511" },
+                    { name: "Erramsetti Yashasree", reg: "nnm22cc055" }
+                ]
+            },
+            {
+                name: "Team 7",
+                members: [
+                    { name: "Dhanush Lokesh Naik", reg: "nnm22is044" },
+                    { name: "Parikshith Bhargav K R", reg: "nnm22is109" },
+                    { name: "Tejas M Naik", reg: "nnm23cs513" },
+                    { name: "Vamshikrishna Murali", reg: "nnm22cc066" }
+                ]
+            },
+            {
+                name: "Team 8",
+                members: [
+                    { name: "Riyaz Ahmed", reg: "nnm22is131" },
+                    { name: "Shravan Kumar", reg: "nnm22is154" },
+                    { name: "Aastha Nitin Shetty", reg: "nnm22cs003" },
+                    { name: "Gurudutt R Pai", reg: "nnm22cc022" }
+                ]
+            },
+            {
+                name: "Team 9",
+                members: [
+                    { name: "Vinit .", reg: "nnm22is201" },
+                    { name: "Mahesh Kamath K S", reg: "nnm22is086" },
+                    { name: "Britney Genelia Martis", reg: "nnm22cs043" },
+                    { name: "Nikhil Yuvaraj Bangera", reg: "nnm22cc008" }
+                ]
+            },
+            {
+                name: "Team 10",
+                members: [
+                    { name: "Sonal Mayola Sequeira", reg: "nnm22is171" },
+                    { name: "Prinston Coelho", reg: "nnm22is121" },
+                    { name: "Dinesh Acharya", reg: "nnm22cs064" },
+                    { name: "Paritosh Jha", reg: "nnm22cc037" }
+                ]
+            },
+            {
+                name: "Team 11",
+                members: [
+                    { name: "Hritwika Varma", reg: "nnm22is060" },
+                    { name: "Bhuvan R Shetty", reg: "nnm22is035" },
+                    { name: "Deeksha Ramachandra", reg: "nnm22cs056" },
+                    { name: "Aishik Roy", reg: "nnm22am002" }
+                ]
+            },
+            {
+                name: "Team 12",
+                members: [
+                    { name: "Thanush .", reg: "nnm22is188" },
+                    { name: "Meghna", reg: "nnm22is092" },
+                    { name: "Vikram Kulal", reg: "nnm22cs207" },
+                    { name: "Amrutha R Rao", reg: "nnm22am023" }
+                ]
+            },
+            {
+                name: "Team 13",
+                members: [
+                    { name: "Bhuvan D Shetty", reg: "nnm22is034" },
+                    { name: "Adithi Pai S", reg: "nnm22is008" },
+                    { name: "Ameesha J Ruzario", reg: "nnm22cs019" },
+                    { name: "Mayur V Udupa", reg: "nnm22am031" }
+                ]
+            },
+            {
+                name: "Team 14",
+                members: [
+                    { name: "Neil Mammen Prakash", reg: "nnm22is104" },
+                    { name: "Vaishak M C", reg: "nnm22is194" },
+                    { name: "Nikhil Shetty", reg: "nnm22cs109" },
+                    { name: "Preksha Jain", reg: "nnm22am043" }
+                ]
+            },
+            {
+                name: "Team 15",
+                members: [
+                    { name: "Samskrithi S", reg: "nnm22is138" },
+                    { name: "Charith U", reg: "nnm22cs046" },
+                    { name: "Charan G", reg: "nnm22cs045" },
+                    { name: "Nibha S Rao", reg: "nnm22am034" }
+                ]
+            }
+        ];
+
+        const useCases = [
+            {
+                title: "EV Charging Slot Booking System ⚡",
+                domain: "Smart Mobility / IoT",
+                features: "View EV stations, book time slots, prevent booking overlaps"
+            },
+            {
+                title: "Freelancer Availability Tracker 👨‍💼",
+                domain: "Gig Economy / HR",
+                features: "Add freelancers with skills, book freelancers, filter by availability"
+            },
+            {
+                title: "Blood Donation Matching System 🩸",
+                domain: "Healthcare / NGO",
+                features: "Register donors, emergency blood requests, match donors by location"
+            },
+            {
+                title: "Green Points Carbon Tracker 🌱",
+                domain: "ESG / Sustainability",
+                features: "Log eco-friendly activities, track points, leaderboard system"
+            },
+            {
+                title: "Remote Interview Scheduler 🗓️",
+                domain: "HR / EdTech",
+                features: "Schedule interviews, avoid time conflicts, reschedule functionality"
+            },
+            {
+                title: "AI Prompt Manager 🤖",
+                domain: "Developer Tools / GenAI",
+                features: "Save prompts with tags, search and filter, favorite prompts"
+            },
+            {
+                title: "Personal Finance Tracker 💰",
+                domain: "FinTech",
+                features: "Log income/expenses, category filtering, monthly balance reports"
+            },
+            {
+                title: "Campus Bus Tracker 🚌",
+                domain: "Education / Logistics",
+                features: "Route management, student assignments, availability tracking"
+            },
+            {
+                title: "Digital Waste Collection Tracker ♻️",
+                domain: "Civic Tech / Sustainability",
+                features: "Pickup requests, collector assignments, status tracking"
+            },
+            {
+                title: "Vaccination Slot Notification System 💉",
+                domain: "Health / Government",
+                features: "Citizen registration, eligibility notifications, slot booking"
+            },
+            {
+                title: "Lost & Found Portal for Campus 🎒",
+                domain: "Campus Utility",
+                features: "Report lost/found items, item matching, category-wise viewing"
+            },
+            {
+                title: "Custom PC Build Configurator 🖥️",
+                domain: "E-commerce / Tech",
+                features: "Component selection, compatibility checking, build sharing"
+            },
+            {
+                title: "Pet Care Appointment Scheduler 🐶",
+                domain: "Veterinary / Booking",
+                features: "Pet profiles, doctor slot booking, appointment history"
+            },
+            {
+                title: "Hackathon Registration System 🧠",
+                domain: "EdTech / Events",
+                features: "Team registration, track assignments, deadline management"
+            },
+            {
+                title: "Apartment Complaint Tracker 🏢",
+                domain: "Property Management",
+                features: "Maintenance complaints, technician assignments, status tracking"
+            }
+        ];
+
+        let currentAssignments = [];
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function generateAssignments() {
+            const shuffledUseCases = shuffleArray(useCases);
+            currentAssignments = teams.map((team, index) => ({
+                team: team,
+                useCase: shuffledUseCases[index]
+            }));
+        }
+
+        function renderAssignments() {
+            const container = document.getElementById('assignments');
+            container.innerHTML = currentAssignments.map(assignment => `
+                <div class="team-card">
+                    <div class="team-header">
+                        <div class="team-name">${assignment.team.name}</div>
+                        <div class="domain">${assignment.useCase.domain}</div>
+                    </div>
+                    <div class="use-case-title">${assignment.useCase.title}</div>
+                    <div class="members">
+                        ${assignment.team.members.map(member => `
+                            <div class="member">
+                                <div class="member-name">${member.name}</div>
+                                <div class="member-reg">${member.reg}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="features">
+                        <div class="features-title">Key Features:</div>
+                        ${assignment.useCase.features}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function shuffleAssignments() {
+            generateAssignments();
+            renderAssignments();
+        }
+
+        function downloadAsExcel() {
+            // Create Excel-compatible HTML table
+            const date = new Date().toISOString().split('T')[0];
+            let htmlContent = `
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <title>Team Assignment</title>
+                </head>
+                <body>
+                    <h1>Random Team-Use Case Assignment</h1>
+                    <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                    <table border="1" style="border-collapse: collapse; width: 100%;">
+                        <tr style="background-color: #4CAF50; color: white;">
+                            <th>Team</th>
+                            <th>Use Case</th>
+                            <th>Domain</th>
+                            <th>Member 1</th>
+                            <th>Reg No 1</th>
+                            <th>Member 2</th>
+                            <th>Reg No 2</th>
+                            <th>Member 3</th>
+                            <th>Reg No 3</th>
+                            <th>Member 4</th>
+                            <th>Reg No 4</th>
+                            <th>Key Features</th>
+                        </tr>
+            `;
+            
+            currentAssignments.forEach(assignment => {
+                htmlContent += `<tr>
+                    <td>${assignment.team.name}</td>
+                    <td>${assignment.useCase.title}</td>
+                    <td>${assignment.useCase.domain}</td>
+                    <td>${assignment.team.members[0]?.name || ''}</td>
+                    <td>${assignment.team.members[0]?.reg || ''}</td>
+                    <td>${assignment.team.members[1]?.name || ''}</td>
+                    <td>${assignment.team.members[1]?.reg || ''}</td>
+                    <td>${assignment.team.members[2]?.name || ''}</td>
+                    <td>${assignment.team.members[2]?.reg || ''}</td>
+                    <td>${assignment.team.members[3]?.name || ''}</td>
+                    <td>${assignment.team.members[3]?.reg || ''}</td>
+                    <td>${assignment.useCase.features}</td>
+                </tr>`;
+            });
+            
+            htmlContent += '</table></body></html>';
+            
+            const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
+            downloadFile(blob, `Team_Assignment_${date}.xls`);
+        }
+
+        function downloadAsCSV() {
+            const date = new Date().toISOString().split('T')[0];
+            let csvContent = 'Team,Use Case,Domain,Member 1,Reg No 1,Member 2,Reg No 2,Member 3,Reg No 3,Member 4,Reg No 4,Key Features\n';
+            
+            currentAssignments.forEach(assignment => {
+                const row = [
+                    assignment.team.name,
+                    `"${assignment.useCase.title}"`,
+                    `"${assignment.useCase.domain}"`,
+                    `"${assignment.team.members[0]?.name || ''}"`,
+                    assignment.team.members[0]?.reg || '',
+                    `"${assignment.team.members[1]?.name || ''}"`,
+                    assignment.team.members[1]?.reg || '',
+                    `"${assignment.team.members[2]?.name || ''}"`,
+                    assignment.team.members[2]?.reg || '',
+                    `"${assignment.team.members[3]?.name || ''}"`,
+                    assignment.team.members[3]?.reg || '',
+                    `"${assignment.useCase.features}"`
+                ].join(',');
+                csvContent += row + '\n';
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            downloadFile(blob, `Team_Assignment_${date}.csv`);
+        }
+
+        function downloadAsPDF() {
+            // Generate HTML content optimized for PDF printing
+            const date = new Date().toISOString().split('T')[0];
+            const pdfContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <title>Team Assignment</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; font-size: 12px; }
+                        h1 { text-align: center; color: #333; }
+                        .header { text-align: center; margin-bottom: 20px; }
+                        .team-item { margin-bottom: 15px; border: 1px solid #ddd; padding: 10px; }
+                        .team-name { font-weight: bold; font-size: 14px; color: #2c3e50; }
+                        .use-case { font-weight: bold; color: #e74c3c; margin: 5px 0; }
+                        .domain { background: #3498db; color: white; padding: 2px 8px; border-radius: 3px; font-size: 10px; }
+                        .members { margin: 8px 0; }
+                        .member { display: inline-block; width: 48%; margin: 2px 0; }
+                        .features { margin-top: 8px; font-style: italic; }
+                        @media print { body { margin: 10px; } }
+                    </style>
+                </head>
+                <body>
+                    <h1>🎲 Random Team-Use Case Assignment</h1>
+                    <div class="header">
+                        <p><strong>Generated on:</strong> ${new Date().toLocaleDateString()}</p>
+                        <p><strong>Total Teams:</strong> 15 | <strong>Implementation:</strong> Python OOP + Dictionary</p>
+                    </div>
+                    
+                    ${currentAssignments.map((assignment, index) => `
+                        <div class="team-item">
+                            <div class="team-name">${index + 1}. ${assignment.team.name}</div>
+                            <div class="use-case">${assignment.useCase.title}</div>
+                            <span class="domain">${assignment.useCase.domain}</span>
+                            <div class="members">
+                                ${assignment.team.members.map(member => 
+                                    `<div class="member">• ${member.name} (${member.reg})</div>`
+                                ).join('')}
+                            </div>
+                            <div class="features"><strong>Features:</strong> ${assignment.useCase.features}</div>
+                        </div>
+                    `).join('')}
+                    
+                    <div style="margin-top: 20px; border-top: 2px solid #333; padding-top: 10px;">
+                        <h3>Implementation Guidelines:</h3>
+                        <ul>
+                            <li>Use Python OOP with proper class structure</li>
+                            <li>Implement dictionary-based data storage</li>
+                            <li>Include CRUD operations for your domain</li>
+                            <li>Add basic validation and error handling</li>
+                            <li>Create a simple console-based interface</li>
+                        </ul>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob([pdfContent], { type: 'text/html' });
+            downloadFile(blob, `Team_Assignment_${date}.html`);
+            
+            // Show instruction for PDF conversion
+            setTimeout(() => {
+                alert('HTML file downloaded! To convert to PDF:\n1. Open the HTML file in your browser\n2. Press Ctrl+P (or Cmd+P on Mac)\n3. Select "Save as PDF" as destination\n4. Click Save');
+            }, 500);
+        }
+
+        function downloadAsJSON() {
+            const date = new Date().toISOString().split('T')[0];
+            const jsonData = {
+                metadata: {
+                    title: "Random Team-Use Case Assignment",
+                    generatedOn: new Date().toISOString(),
+                    totalTeams: 15,
+                    totalUseCases: 15,
+                    implementation: "Python OOP + Dictionary"
+                },
+                assignments: currentAssignments.map((assignment, index) => ({
+                    id: index + 1,
+                    teamName: assignment.team.name,
+                    useCase: {
+                        title: assignment.useCase.title,
+                        domain: assignment.useCase.domain,
+                        features: assignment.useCase.features
+                    },
+                    members: assignment.team.members.map(member => ({
+                        name: member.name,
+                        registrationNumber: member.reg
+                    }))
+                }))
+            };
+            
+            const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
+            downloadFile(blob, `Team_Assignment_${date}.json`);
+        }
+
+        function downloadAsText() {
+            const content = generateTextContent();
+            const blob = new Blob([content], { type: 'text/plain' });
+            downloadFile(blob, `Team_Assignment_${new Date().toISOString().split('T')[0]}.txt`);
+        }
+
+        function downloadFile(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function generateDownloadContent() {
+            const date = new Date().toLocaleDateString();
+            let content = `RANDOM TEAM-USE CASE ASSIGNMENT\n`;
+            content += `Generated on: ${date}\n`;
+            content += `Total Teams: 15 | Total Use Cases: 15\n`;
+            content += `Implementation: Python OOP + Dictionary\n`;
+            content += `${'='.repeat(60)}\n\n`;
+
+            currentAssignments.forEach((assignment, index) => {
+                content += `${index + 1}. ${assignment.team.name} - ${assignment.useCase.title}\n`;
+                content += `   Domain: ${assignment.useCase.domain}\n`;
+                content += `   Members:\n`;
+                assignment.team.members.forEach(member => {
+                    content += `   - ${member.name} (${member.reg})\n`;
+                });
+                content += `   Key Features: ${assignment.useCase.features}\n\n`;
+            });
+
+            content += `${'='.repeat(60)}\n`;
+            content += `Implementation Guidelines:\n`;
+            content += `- Use Python OOP with proper class structure\n`;
+            content += `- Implement dictionary-based data storage\n`;
+            content += `- Include CRUD operations for your domain\n`;
+            content += `- Add basic validation and error handling\n`;
+            content += `- Create a simple console-based interface\n`;
+            content += `- Document your code with comments\n`;
+            content += `- Prepare sample test cases for demonstration\n`;
+
+            return content;
+        }
+
+        function generateTextContent() {
+            return generateDownloadContent();
+        }
+
+        // Initialize
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        generateAssignments();
+        renderAssignments();
+    </script>
+</body>
+</html>
